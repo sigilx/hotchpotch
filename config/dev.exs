@@ -38,6 +38,6 @@ config :hotchpotch, Hotchpotch.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "bigfang",
   password: "",
-  database: "hotchpotch",
+  database: "hotchpotch_dev",
   hostname: "localhost",
   pool_size: 10
