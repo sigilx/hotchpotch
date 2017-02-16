@@ -2,7 +2,7 @@ defmodule Hotchpotch.UserControllerTest do
   use Hotchpotch.ConnCase
 
   alias Hotchpotch.User
-  @valid_attrs %{email: "some content", password: "some content", username: "some content"}
+  @valid_attrs %{email: "fake@example.com", password: "some content", username: "fakename"}
   @invalid_attrs %{}
 
   test "lists all entries on index", %{conn: conn} do
@@ -18,7 +18,7 @@ defmodule Hotchpotch.UserControllerTest do
   test "creates resource and redirects when data is valid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), user: @valid_attrs
     assert redirected_to(conn) == user_path(conn, :index)
-    assert Repo.get_by(User, @valid_attrs)
+    assert Repo.get_by(User, @valid_attrs |> Map.delete(:password))
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
@@ -48,7 +48,7 @@ defmodule Hotchpotch.UserControllerTest do
     user = Repo.insert! %User{}
     conn = put conn, user_path(conn, :update, user), user: @valid_attrs
     assert redirected_to(conn) == user_path(conn, :show, user)
-    assert Repo.get_by(User, @valid_attrs)
+    assert Repo.get_by(User, @valid_attrs |> Map.delete(:password))
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
