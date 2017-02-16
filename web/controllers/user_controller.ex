@@ -1,5 +1,6 @@
 defmodule Hotchpotch.UserController do
   use Hotchpotch.Web, :controller
+  plug :login_require when action in [:index, :show, :edit, :update, :delete]
 
   alias Hotchpotch.User
 
@@ -63,5 +64,22 @@ defmodule Hotchpotch.UserController do
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: user_path(conn, :index))
+  end
+
+
+  @doc """
+  检查用户登录状态
+
+  Returns `conn`
+  """
+  def login_require(conn, _opts) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:info, "请先登录")
+      |> redirect(to: session_path(conn, :new))
+      |> halt()
+    end
   end
 end
