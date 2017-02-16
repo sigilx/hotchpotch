@@ -25,4 +25,11 @@ defmodule Hotchpotch.SessionController do
         |> render("new.html")
     end
   end
+
+  def delete(conn, _params) do
+    conn
+    |> delete_session(:user_id)
+    |> put_flash(:info, "退出成功")
+    |> redirect(to: page_path(conn, :index))
+  end
 end

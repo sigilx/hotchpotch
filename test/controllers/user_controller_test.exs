@@ -17,8 +17,13 @@ defmodule Hotchpotch.UserControllerTest do
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), user: @valid_attrs
-    assert redirected_to(conn) == user_path(conn, :index)
+    assert redirected_to(conn) == page_path(conn, :index)
     assert Repo.get_by(User, @valid_attrs |> Map.delete(:password))
+
+    conn = get conn, page_path(conn, :index)
+    assert html_response(conn, 200) =~ Map.get(@valid_attrs, :username)
+
+    assert html_response(conn, 200) =~ "退出"
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do

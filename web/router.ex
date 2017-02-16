@@ -21,8 +21,7 @@ defmodule Hotchpotch.Router do
 
     resources "/users", UserController
 
-    get "/sessions/new", SessionController, :new
-    post "/sessions/new", SessionController, :create
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
   # Other scopes may use custom stacks.
