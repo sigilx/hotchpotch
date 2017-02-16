@@ -62,4 +62,10 @@ defmodule Hotchpotch.ModelCase do
     |> Ecto.Changeset.traverse_errors(&Hotchpotch.ErrorHelpers.translate_error/1)
     |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
   end
+
+  def errors_on(changeset) do
+    changeset
+    |> Ecto.Changeset.traverse_errors(&Hotchpotch.ErrorHelpers.translate_error/1)
+    |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
+  end
 end
