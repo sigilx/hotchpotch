@@ -20,7 +20,7 @@ defmodule Hotchpotch.UserController do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User created successfully.")
-        |> put_session(:user_id, user.id)
+        |> Hotchpotch.Auth.login(user)
         |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -46,6 +46,7 @@ defmodule Hotchpotch.UserController do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User updated successfully.")
+        |> Hotchpotch.Auth.login(user)
         |> redirect(to: user_path(conn, :show, user))
       {:error, changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)

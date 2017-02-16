@@ -14,6 +14,10 @@ defmodule Hotchpotch.SessionControllerTest do
     user_changeset = User.changeset(%User{}, @valid_user_attrs)
     user = Repo.insert! user_changeset
 
+    conn = get conn, page_path(conn, :index)
+    assert html_response(conn, 200) =~ "登录"
+    assert html_response(conn, 200) =~ "注册"
+
     conn = post conn, session_path(conn, :create), session: @valid_user_attrs
     assert get_flash(conn, :info) == "欢迎你"
     assert redirected_to(conn) == page_path(conn, :index)

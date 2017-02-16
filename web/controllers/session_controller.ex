@@ -11,8 +11,8 @@ defmodule Hotchpotch.SessionController do
     cond do
       user && Comeonin.Bcrypt.checkpw(password, user.password_hash) ->
         conn
-        |> put_session(:user_id, user.id)
         |> put_flash(:info, "欢迎你")
+        |> Hotchpotch.Auth.login(user)
         |> redirect(to: page_path(conn, :index))
       user ->
         conn
