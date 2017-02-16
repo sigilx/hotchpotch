@@ -16,12 +16,6 @@ defmodule Hotchpotch.UserControllerTest do
     end
   end
 
-  @tag logged_in: true
-  test "lists all entries on index", %{conn: conn} do
-    conn = get conn, user_path(conn, :index)
-    assert html_response(conn, 200) =~ "Listing users"
-  end
-
   test "renders form for new resources", %{conn: conn} do
     conn = get conn, user_path(conn, :new)
     assert html_response(conn, 200) =~ "New user"
@@ -79,22 +73,12 @@ defmodule Hotchpotch.UserControllerTest do
     assert html_response(conn, 200) =~ "Edit user"
   end
 
-  @tag logged_in: true
-  test "deletes chosen resource", %{conn: conn} do
-    user = Repo.insert! %User{}
-    conn = delete conn, user_path(conn, :delete, user)
-    assert redirected_to(conn) == user_path(conn, :index)
-    refute Repo.get(User, user.id)
-  end
-
   test "guest access user action redirected to login page", %{conn: conn} do
     user = Repo.insert! %User{}
     Enum.each([
-      get(conn, user_path(conn, :index)),
       get(conn, user_path(conn, :show, user)),
       get(conn, user_path(conn, :edit, user)),
       put(conn, user_path(conn, :update, user), user: %{}),
-      delete(conn, user_path(conn, :delete, user))
     ], fn conn ->
       assert redirected_to(conn) == session_path(conn, :new)
       assert conn.halted
