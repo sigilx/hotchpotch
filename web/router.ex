@@ -7,6 +7,7 @@ defmodule Hotchpotch.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Hotchpotch.Auth, repo: Hotchpotch.Repo
   end
 
   pipeline :api do
@@ -19,6 +20,9 @@ defmodule Hotchpotch.Router do
     get "/", PageController, :index
 
     resources "/users", UserController
+
+    get "/sessions/new", SessionController, :new
+    post "/sessions/new", SessionController, :create
   end
 
   # Other scopes may use custom stacks.
