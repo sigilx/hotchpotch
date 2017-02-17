@@ -3,6 +3,7 @@ defmodule Hotchpotch.UserControllerTest do
 
   alias Hotchpotch.{Repo, User}
   @valid_attrs %{email: "fake@gmail.com", password: "some content", username: "fakename"}
+  @another_valid_attrs %{email: "fake+1@gmail.com", password: "some content", username: "samchen"}
   @invalid_attrs %{}
 
   setup %{conn: conn} = context do
@@ -38,37 +39,26 @@ defmodule Hotchpotch.UserControllerTest do
   end
 
   @tag logged_in: true
-  test "shows chosen resource", %{conn: conn} do
-    user = Repo.insert! %User{}
+  test "shows chosen resource", %{conn: conn, user: user} do
     conn = get conn, user_path(conn, :show, user)
     assert html_response(conn, 200) =~ "Show user"
   end
 
   @tag logged_in: true
-  test "renders page not found when id is nonexistent", %{conn: conn} do
-    assert_error_sent 404, fn ->
-      get conn, user_path(conn, :show, -1)
-    end
-  end
-
-  @tag logged_in: true
-  test "renders form for editing chosen resource", %{conn: conn} do
-    user = Repo.insert! %User{}
+  test "renders form for editing chosen resource", %{conn: conn, user: user} do
     conn = get conn, user_path(conn, :edit, user)
     assert html_response(conn, 200) =~ "Edit user"
   end
 
   @tag logged_in: true
-  test "updates chosen resource and redirects when data is valid", %{conn: conn} do
-    user = Repo.insert! %User{}
-    conn = put conn, user_path(conn, :update, user), user: @valid_attrs
+  test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user} do
+    conn = put conn, user_path(conn, :update, user), user: @another_valid_attrs
     assert redirected_to(conn) == user_path(conn, :show, user)
-    assert Repo.get_by(User, @valid_attrs |> Map.delete(:password))
+    assert Repo.get_by(User, @another_valid_attrs |> Map.delete(:password))
   end
 
   @tag logged_in: true
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    user = Repo.insert! %User{}
+  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user: user} do
     conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit user"
   end
