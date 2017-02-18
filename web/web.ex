@@ -36,6 +36,7 @@ defmodule Hotchpotch.Web do
 
       import Hotchpotch.Router.Helpers
       import Hotchpotch.Gettext
+      import Hotchpotch.Auth, only: [login_require: 2, self_require: 2]
     end
   end
 
