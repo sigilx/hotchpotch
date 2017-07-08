@@ -1,6 +1,7 @@
 defmodule Hotchpotch.BoardController do
   use Hotchpotch.Web, :controller
 
+  plug :login_require
   alias Hotchpotch.Board
 
   def index(conn, _params) do
