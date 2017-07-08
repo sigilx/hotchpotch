@@ -30,4 +30,17 @@ defmodule Hotchpotch.BoardTest do
     attrs = %{@valid_attrs | user_id: nil}
     assert {:user_id, "请填写"} in errors_on(%Board{}, attrs)
   end
+
+  test "title's length should be larger than 4" do
+    attrs = %{@valid_attrs | title: "abc"}
+    changeset = Board.changeset(%Board{}, attrs)
+    assert {:title, "标题最短 4 位"} in errors_on(changeset)
+  end
+
+  test "title's length should be less than 20" do
+    attrs = %{@valid_attrs | title: String.duplicate("a", 21)}
+    changeset = Board.changeset(%Board{}, attrs)
+    assert {:title, "标题最长 20 位"} in errors_on(changeset)
+  end
+
 end
