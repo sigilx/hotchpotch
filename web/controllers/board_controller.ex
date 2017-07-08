@@ -10,12 +10,18 @@ defmodule Hotchpotch.BoardController do
   end
 
   def new(conn, _params) do
-    changeset = Board.changeset(%Board{})
+    changeset =
+      conn.assigns.current_user
+      |> build_assoc(:boards)
+      |> Board.changeset()
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"board" => board_params}) do
-    changeset = Board.changeset(%Board{}, board_params)
+    changeset =
+      conn.assigns.current_user
+      |> build_assoc(:boards)
+      |> Board.changeset(board_params)
 
     case Repo.insert(changeset) do
       {:ok, _board} ->

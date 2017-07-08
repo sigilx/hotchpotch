@@ -8,12 +8,11 @@ defmodule Hotchpotch.BoardControllerTest do
   setup %{conn: conn} = context do
     user_attrs = %{email: "fake@gmail.com", username: "faker", password: String.duplicate("1", 6)}
     user = Repo.insert! User.changeset(%User{}, user_attrs)
-    attrs = Map.put(@valid_attrs, :user_id, user.id)
     if context[:logged_in] == true do
       conn = post conn, session_path(conn, :create), session: user_attrs
-      {:ok, [conn: conn, attrs: attrs]}
+      {:ok, [conn: conn, user: user]}
     else
-      {:ok, [attrs: attrs]}
+      :ok
     end
   end
 
@@ -30,10 +29,10 @@ defmodule Hotchpotch.BoardControllerTest do
   end
 
   @tag logged_in: true
-  test "creates resource and redirects when data is valid", %{conn: conn, attrs: attrs} do
-    conn = post conn, board_path(conn, :create), board: attrs
+  test "creates resource and redirects when data is valid", %{conn: conn, user: user} do
+    conn = post conn, board_path(conn, :create), board: @valid_attrs
     assert redirected_to(conn) == board_path(conn, :index)
-    assert Repo.get_by(Board, attrs)
+    assert Repo.get_by(Board, Map.put(@valid_attrs, :user_id, user.id))
   end
 
   @tag logged_in: true
@@ -64,11 +63,11 @@ defmodule Hotchpotch.BoardControllerTest do
   end
 
   @tag logged_in: true
-  test "updates chosen resource and redirects when data is valid", %{conn: conn, attrs: attrs} do
+  test "updates chosen resource and redirects when data is valid", %{conn: conn} do
     board = Repo.insert! %Board{}
-    conn = put conn, board_path(conn, :update, board), board: attrs
+    conn = put conn, board_path(conn, :update, board), board: @valid_attrs
     assert redirected_to(conn) == board_path(conn, :show, board)
-    assert Repo.get_by(Board, attrs)
+    assert Repo.get_by(Board, @valid_attrs)
   end
 
   @tag logged_in: true
