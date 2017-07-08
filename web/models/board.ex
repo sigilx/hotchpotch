@@ -13,7 +13,8 @@ defmodule Hotchpotch.Board do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title])
-    |> validate_required([:title])
+    |> cast(params, [:title, :user_id])
+    |> validate_required([:title, :user_id], message: "请填写")
+    |> foreign_key_constraint(:user_id, message: "用户不存在")
   end
 end
