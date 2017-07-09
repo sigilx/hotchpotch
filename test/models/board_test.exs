@@ -1,7 +1,7 @@
 defmodule Hotchpotch.BoardTest do
   use Hotchpotch.ModelCase
 
-  alias Hotchpotch.Board
+  alias Hotchpotch.{Board, User}
 
   @valid_attrs %{title: "some content"}
   @invalid_attrs %{}
@@ -33,4 +33,12 @@ defmodule Hotchpotch.BoardTest do
     assert {:title, "标题最长 20 位"} in errors_on(changeset)
   end
 
+  test "user must exist" do
+    changeset =
+      %User{id: -1}
+      |> Ecto.build_assoc(:boards)
+      |> Board.changeset(@valid_attrs)
+    {:error, changeset} = Repo.insert changeset
+    assert {:user_id, "does not exist"} in errors_on(changeset)
+  end
 end
