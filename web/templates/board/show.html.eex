@@ -1,0 +1,18 @@
+<h2>Show board</h2>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @board.title %>
+  </li>
+
+  <li>
+    <strong>User:</strong>
+    <%= @board.user_id %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: board_path(@conn, :edit, @board) %>
+<%= link "Back", to: board_path(@conn, :index) %>

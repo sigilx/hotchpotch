@@ -20,6 +20,7 @@ defmodule Hotchpotch.Router do
     get "/", PageController, :index
 
     resources "/users", UserController
+    resources "/boards", BoardController
 
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
