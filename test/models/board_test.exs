@@ -36,7 +36,7 @@ defmodule Hotchpotch.BoardTest do
   test "user must exist" do
     changeset =
       %User{id: -1}
-      |> Ecto.build_assoc(:boards)
+      |> Ecto.build_assoc(:board)
       |> Board.changeset(@valid_attrs)
     {:error, changeset} = Repo.insert changeset
     assert {:user_id, "does not exist"} in errors_on(changeset)

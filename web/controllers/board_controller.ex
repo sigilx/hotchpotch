@@ -12,7 +12,7 @@ defmodule Hotchpotch.BoardController do
   def new(conn, _params) do
     changeset =
       conn.assigns.current_user
-      |> build_assoc(:boards)
+      |> build_assoc(:board)
       |> Board.changeset()
     render(conn, "new.html", changeset: changeset)
   end
@@ -20,7 +20,7 @@ defmodule Hotchpotch.BoardController do
   def create(conn, %{"board" => board_params}) do
     changeset =
       conn.assigns.current_user
-      |> build_assoc(:boards)
+      |> build_assoc(:board)
       |> Board.changeset(board_params)
 
     case Repo.insert(changeset) do
@@ -34,18 +34,18 @@ defmodule Hotchpotch.BoardController do
   end
 
   def show(conn, %{"id" => id}) do
-    board = Repo.get!(assoc(conn.assigns.current_user, :boards), id)
+    board = Repo.get!(assoc(conn.assigns.current_user, :board), id)
     render(conn, "show.html", board: board)
   end
 
   def edit(conn, %{"id" => id}) do
-    board = Repo.get!(assoc(conn.assigns.current_user, :boards), id)
+    board = Repo.get!(assoc(conn.assigns.current_user, :board), id)
     changeset = Board.changeset(board)
     render(conn, "edit.html", board: board, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "board" => board_params}) do
-    board = Repo.get!(assoc(conn.assigns.current_user, :boards), id)
+    board = Repo.get!(assoc(conn.assigns.current_user, :board), id)
     changeset = Board.changeset(board, board_params)
 
     case Repo.update(changeset) do
@@ -59,7 +59,7 @@ defmodule Hotchpotch.BoardController do
   end
 
   def delete(conn, %{"id" => id}) do
-    board = Repo.get!(assoc(conn.assigns.current_user, :boards), id)
+    board = Repo.get!(assoc(conn.assigns.current_user, :board), id)
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).

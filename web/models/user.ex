@@ -6,7 +6,7 @@ defmodule Hotchpotch.User do
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
-    has_one :boards, Hotchpotch.Board
+    has_one :board, Hotchpotch.Board
 
     timestamps()
   end
