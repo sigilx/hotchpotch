@@ -1,8 +1,10 @@
 defmodule Hotchpotch.UserSocket do
   use Phoenix.Socket
 
+  alias Hotchpotch.{Repo, User}
+
   ## Channels
-  # channel "room:*", Hotchpotch.RoomChannel
+  channel "board:*", Hotchpotch.BoardChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
@@ -19,8 +21,13 @@ defmodule Hotchpotch.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket) do
-    {:ok, socket}
+  def connect(%{"token" => token}, socket) do
+    case Phoenix.Token.verify(socket, "user", token, max_age: 3600*24) do
+      {:ok, user_id} ->
+        {:ok, assign(socket, :current_user, Repo.get!(User, user_id))}
+      {:error, _reason} ->
+        :error
+    end
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
