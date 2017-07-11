@@ -8,7 +8,7 @@ defmodule Hotchpotch.Repo.Migrations.CreateBoard do
 
       timestamps()
     end
-    create index(:boards, [:user_id])
+    create unique_index(:boards, [:user_id])
 
   end
 end
