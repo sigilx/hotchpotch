@@ -3,8 +3,8 @@
 <ul>
 
   <li>
-    <strong>Username:</strong>
-    <%= @user.username %>
+    <strong>Nickname:</strong>
+    <%= @user.nickname %>
   </li>
 
   <li>
