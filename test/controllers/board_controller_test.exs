@@ -6,7 +6,7 @@ defmodule Hotchpotch.BoardControllerTest do
   @invalid_attrs %{}
 
   setup %{conn: conn} = context do
-    user_attrs = %{email: "fake@gmail.com", username: "faker", password: String.duplicate("1", 6)}
+    user_attrs = %{email: "fake@gmail.com", nickname: "大傻", password: String.duplicate("1", 6)}
     user = Repo.insert! User.changeset(%User{}, user_attrs)
     if context[:logged_in] == true do
       conn = post conn, session_path(conn, :create), session: user_attrs
@@ -87,15 +87,11 @@ defmodule Hotchpotch.BoardControllerTest do
 
   @tag logged_in: true
   test "user should not allowed to show board of other people", %{conn: conn, user: user} do
-    # 当前登录用户创建了一个board
     conn = post conn, board_path(conn, :create), board: @valid_attrs
     board = Repo.get_by(Board, Map.put(@valid_attrs, :user_id, user.id))
-    # 新建一个用户
-    new_user_attrs = %{email: "fake+1@gmail.com", "username": "faker2", password: String.duplicate("1", 6)}
+    new_user_attrs = %{email: "fake+1@gmail.com", "nickname": "二傻", password: String.duplicate("1", 6)}
     Repo.insert! User.changeset(%User{}, new_user_attrs)
-    # 登录新建的用户
     conn = post conn, session_path(conn, :create), session: new_user_attrs
-    # 读取前头的 board 失败，因为它不属于新用户所有
     assert_error_sent 404, fn ->
       get conn, board_path(conn, :show, board)
     end

@@ -4,7 +4,7 @@ defmodule Hotchpotch.Repo.Migrations.AlterUserTable do
   def change do
     alter table(:users) do
       remove :password
-      add :password_hash, :string
+      add :password_hash, :string, null: false
     end
   end
 end

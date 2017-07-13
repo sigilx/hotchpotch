@@ -3,7 +3,7 @@ defmodule Hotchpotch.SessionControllerTest do
 
   alias Hotchpotch.{Repo, User}
 
-  @valid_user_attrs %{email: "fakemail@gmail.com", username: "fakename", password: String.duplicate("o", 6)}
+  @valid_user_attrs %{email: "fakemail@gmail.com", nickname: "大傻", password: String.duplicate("o", 6)}
 
   test "renders form for new sessions", %{conn: conn} do
     conn = get conn, session_path(conn, :new)
@@ -23,9 +23,9 @@ defmodule Hotchpotch.SessionControllerTest do
     assert redirected_to(conn) == page_path(conn, :index)
 
     conn = get conn, page_path(conn, :index)
-    assert html_response(conn, 200) =~ Map.get(@valid_user_attrs, :username)
+    assert html_response(conn, 200) =~ Map.get(@valid_user_attrs, :nickname)
     conn = get conn, user_path(conn, :show, user)
-    assert html_response(conn, 200) =~ Map.get(@valid_user_attrs, :username)
+    assert html_response(conn, 200) =~ Map.get(@valid_user_attrs, :nickname)
   end
 
   test "redirect to session new when email exists but with wrong password", %{conn: conn} do

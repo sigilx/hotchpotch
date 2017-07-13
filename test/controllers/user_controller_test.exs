@@ -2,15 +2,15 @@ defmodule Hotchpotch.UserControllerTest do
   use Hotchpotch.ConnCase
 
   alias Hotchpotch.{Repo, User}
-  @valid_attrs %{email: "fake@gmail.com", password: "some content", username: "fakename"}
-  @another_valid_attrs %{email: "fake+1@gmail.com", password: "some content", username: "samchen"}
+  @valid_attrs %{email: "fake@gmail.com", password: "some content", nickname: "呆子"}
+  @another_valid_attrs %{email: "fake+1@gmail.com", password: "some content", nickname: "傻子"}
   @invalid_attrs %{}
 
   setup %{conn: conn} = context do
     if context[:logged_in] == true do
       user = Repo.insert! User.changeset(%User{}, @valid_attrs)
       conn = post conn, session_path(conn, :create), session: @valid_attrs
-      conn = put conn, user_path(conn, :update, user), user: %{@valid_attrs | username: "samchen", email: "fake+1@gmail.com"}
+      conn = put conn, user_path(conn, :update, user), user: %{@valid_attrs | nickname: "大傻", email: "fake+1@gmail.com"}
       {:ok, [conn: conn, user: user]}
     else
       :ok
@@ -28,7 +28,7 @@ defmodule Hotchpotch.UserControllerTest do
     assert Repo.get_by(User, @valid_attrs |> Map.delete(:password))
 
     conn = get conn, page_path(conn, :index)
-    assert html_response(conn, 200) =~ Map.get(@valid_attrs, :username)
+    assert html_response(conn, 200) =~ Map.get(@valid_attrs, :nickname)
 
     assert html_response(conn, 200) =~ "退出"
   end
@@ -64,7 +64,7 @@ defmodule Hotchpotch.UserControllerTest do
   end
 
   test "guest access user action redirected to login page", %{conn: conn} do
-    user = Repo.insert! %User{}
+    user = Repo.insert! User.changeset(%User{}, @valid_attrs)
     Enum.each([
       get(conn, user_path(conn, :show, user)),
       get(conn, user_path(conn, :edit, user)),
