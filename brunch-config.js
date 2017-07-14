@@ -2,7 +2,7 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js"
+      joinTo: "js/app.js",
 
       // To use a separate vendor.js bundle, specify two files path
       // http://brunch.io/docs/config#-files-
@@ -42,7 +42,9 @@ exports.config = {
     // Dependencies and current project directories to watch
     watched: [
       "web/static",
-      "test/static"
+      "test/static",
+      "node_modules/bootstrap/dist/css/bootstrap.css",
+      "node_modules/bootstrap-vue/dist/bootstrap-vue.css"
     ],
 
     // Where to compile files to
@@ -54,10 +56,6 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/web\/static\/vendor/]
-    },
-    vue: {
-      extractCSS: true,
-      out: 'priv/static/css/components.css'
     }
   },
 
@@ -70,7 +68,7 @@ exports.config = {
   npm: {
     enabled: true,
     globals: {
-      vue: 'vue/dist/vue.common.js'
+      Vue: 'vue/dist/vue.js'
     }
   }
 };

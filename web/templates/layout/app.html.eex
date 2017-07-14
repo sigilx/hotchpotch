@@ -12,7 +12,6 @@
 
     <title>Hello Hotchpotch!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/components.css") %>">
   </head>
 
   <body>
@@ -32,9 +31,6 @@
         </nav>
         <span class="logo"></span>
 
-        <div id="app">
-          <my-app><my-app>
-        </div>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
@@ -45,6 +41,14 @@
       </main>
 
     </div> <!-- /container -->
+
+<div id="main">
+  <hello></hello>
+  <b-alert show>
+    Default Alert
+  </b-alert>
+</div>
+
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
