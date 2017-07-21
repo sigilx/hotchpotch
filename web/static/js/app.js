@@ -22,12 +22,13 @@ import socket from "./socket"
 
 
 import BootstrapVue from 'bootstrap-vue';
-import Hello from './components/hello.vue'
-
+import hBoard from './components/h-board.vue'
+import hMtab from './components/h-mtab.vue'
+import hSend from './components/h-send.vue'
 
 Vue.use(BootstrapVue);
 
 new Vue({
-  el: '#main',
-  components: { Hello }
+  el: '#app',
+  components: { hBoard, hMtab, hSend }
 });

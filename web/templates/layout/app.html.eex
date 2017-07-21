@@ -2,52 +2,54 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <%= if @current_user do %>
       <%= tag :meta, name: "channel_token", content: Phoenix.Token.sign(@conn, "user", @current_user.id) %>
     <% end %>
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Hello Hotchpotch!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-            <%= if @current_user do %>
-              <li><%= link @current_user.nickname, to: user_path(@conn, :show, @current_user) %></li>
-              <li><%= link "退出", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>
-            <% else %>
-              <li><%= link "登录", to: session_path(@conn, :new) %></li>
-              <li><%= link "注册", to: user_path(@conn, :new) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <span class="logo"></span>
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <%= link "嘿嘿黑板", class: "navbar-brand", to: page_path(@conn, :index) %>
 
-      </header>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">主页 <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">链接</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <%= if @current_user do %>
+            <li class="nav-item"><%= link @current_user.nickname, class: "nav-link", to: user_path(@conn, :show, @current_user) %></li>
+            <li class="nav-item"><%= link "退出", class: "nav-link", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>
+          <% else %>
+            <li class="nav-item"><%= link "登录", class: "nav-link", to: session_path(@conn, :new) %></li>
+            <li class="nav-item"><%= link "注册", class: "nav-link", to: user_path(@conn, :new) %></li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
 
+    <div class="container-fluid">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <main role="main">
+      <main id="main" role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
 
     </div> <!-- /container -->
-
-<div id="main">
-  <hello></hello>
-  <b-alert show>
-    Default Alert
-  </b-alert>
-</div>
 
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
