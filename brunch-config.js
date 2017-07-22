@@ -68,7 +68,7 @@ exports.config = {
   npm: {
     enabled: true,
     globals: {
-      Vue: 'vue/dist/vue.js'
+      Vue: 'vue/dist/vue.min.js'
     }
   }
 };
