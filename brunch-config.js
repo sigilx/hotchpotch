@@ -42,9 +42,7 @@ exports.config = {
     // Dependencies and current project directories to watch
     watched: [
       "web/static",
-      "test/static",
-      "node_modules/bootstrap/dist/css/bootstrap.css",
-      "node_modules/bootstrap-vue/dist/bootstrap-vue.css"
+      "test/static"
     ],
 
     // Where to compile files to
@@ -56,6 +54,10 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/web\/static\/vendor/]
+    },
+    vue: {
+      extractCSS: false,
+      out: 'priv/static/css/components.css'
     }
   },
 
@@ -67,8 +69,12 @@ exports.config = {
 
   npm: {
     enabled: true,
+    styles: {
+      "bootstrap": ["dist/css/bootstrap.min.css"],
+      "bootstrap-vue": ["dist/bootstrap-vue.css"]
+    },
     globals: {
-      Vue: 'vue/dist/vue.min.js'
+      Vue: "vue/dist/vue.min.js"
     }
   }
 };
