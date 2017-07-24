@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hans-CN">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,6 +10,7 @@
     <% end %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Hello Hotchpotch!</title>
+    <link rel="icon" href="<%= static_path(@conn, "/favicon.ico") %>" >
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
