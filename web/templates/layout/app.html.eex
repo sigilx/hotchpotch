@@ -42,11 +42,11 @@
       </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <main id="main" role="main">
+      <main id="main" class="py-4" role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
 

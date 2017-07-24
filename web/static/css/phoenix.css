@@ -1,5 +1,10 @@
 /* Phoenix flash messages */
-.alert:empty { display: none; }
+.alert:empty {
+  display: none;
+}
+.alert {
+  margin-top: 1rem;
+}
 
 /* Phoenix inline forms in links and buttons */
 form.link, form.button {
@@ -16,13 +21,8 @@ body {
 
 #main {
   height: 100%;
-  margin-top: 1rem;
 }
 
 .content {
   flex: 1;
-}
-
-.bottom-bar {
-  bottom: 0.3rem;
 }

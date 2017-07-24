@@ -1,13 +1,15 @@
 <template>
   <div class="d-flex justify-content-center">
-    <canvas class="canvas" ></canvas>
+    <canvas class="rounded"></canvas>
   </div>
 </template>
 
 <style scoped>
-.canvas {
-  width: 90%;
-  height: 90%;
+canvas {
+  border: 1px solid #ddd;
+  width: 100%;
+  height: 100%;
+  background-color:whitesmoke;
 }
 </style>
 

@@ -8,7 +8,7 @@
       <h-mtab></h-mtab>
     </div>
   </div>
-  <div class="row bottom-bar">
+  <div class="row py-2">
     <div class="col-4">
     </div>
     <div class="col-8">
