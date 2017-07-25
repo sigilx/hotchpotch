@@ -45,7 +45,7 @@ defmodule Hotchpotch.BoardControllerTest do
   test "shows chosen resource", %{conn: conn, user: user} do
     board = Repo.insert! %Board{user_id: user.id}
     conn = get conn, board_path(conn, :show, board)
-    assert html_response(conn, 200) =~ "Show board"
+    assert html_response(conn, 200) =~ "id=\"app\""
   end
 
   @tag logged_in: true
