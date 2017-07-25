@@ -11,7 +11,7 @@
 </style>
 
 <script>
-import socket from '../socket'
+import socket from '../../socket'
 const channel = socket.channel("board:lobby", {})
 
 export default {

@@ -19,16 +19,3 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import socket from "./socket"
-
-
-import BootstrapVue from 'bootstrap-vue'
-Vue.use(BootstrapVue);
-
-import hBoard from './components/h-board.vue'
-import hMtab from './components/h-mtab.vue'
-import hSend from './components/h-send.vue'
-
-new Vue({
-  el: '#main',
-  components: { hBoard, hMtab, hSend }
-});

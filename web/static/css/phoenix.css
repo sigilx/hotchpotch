@@ -12,7 +12,7 @@ form.link, form.button {
 }
 
 body {
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
 .container-fluid {
   height: 100%;
