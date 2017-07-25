@@ -1,7 +1,7 @@
 <template>
   <b-tabs>
     <b-tab title="消息" active>
-      I'm the first fading tab
+      <h-msg v-for="msg in msgs" :key="msg.id" :msg="msg"></h-msg>
     </b-tab>
     <b-tab title="人员">
       I'm the second tab content
@@ -16,5 +16,18 @@
 </style>
 
 <script>
-  export default {};
+  import hMsg from './h-msg.vue'
+
+  export default {
+    data() {
+      return {
+        msgs: [{id:1, name:'bbb', text:'cgegeegeff'}],
+      }
+    },
+    mounted() {
+    },
+    components: {
+      hMsg
+    }
+  };
 </script>

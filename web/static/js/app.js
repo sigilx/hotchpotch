@@ -21,7 +21,7 @@ import "phoenix_html"
 import socket from "./socket"
 
 
-import BootstrapVue from 'bootstrap-vue';
+import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
 
 import hBoard from './components/h-board.vue'
