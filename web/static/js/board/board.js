@@ -19,8 +19,8 @@ const store = new Vuex.Store({
         .receive('ok', resp => {
           console.log("Joined successfully", resp)
           state.channel.push("new_msg", {
-            name: "system",
-            body: 'joined #random',
+            name: document.querySelector('#nickname').textContent,
+            body: '加入频道 ' + document.querySelector('#app .title').textContent,
             is_system: true
           })
         })

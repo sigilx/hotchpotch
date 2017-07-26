@@ -2,6 +2,7 @@
 <div id="app">
   <div class="row content">
     <div class="col-9">
+      <h5 class="title"><%= @board.title %></h5>
       <h-board></h-board>
     </div>
     <div class="col-3">

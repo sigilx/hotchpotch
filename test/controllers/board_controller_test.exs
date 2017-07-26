@@ -2,7 +2,7 @@ defmodule Hotchpotch.BoardControllerTest do
   use Hotchpotch.ConnCase
 
   alias Hotchpotch.{Repo, User, Board}
-  @valid_attrs %{title: "some content"}
+  @valid_attrs %{title: "ohmytitle"}
   @invalid_attrs %{}
 
   setup %{conn: conn} = context do
@@ -45,7 +45,7 @@ defmodule Hotchpotch.BoardControllerTest do
   test "shows chosen resource", %{conn: conn, user: user} do
     board = Repo.insert! %Board{user_id: user.id}
     conn = get conn, board_path(conn, :show, board)
-    assert html_response(conn, 200) =~ "id=\"app\""
+    assert html_response(conn, 200) =~ "ohmytitle"
   end
 
   @tag logged_in: true
@@ -93,7 +93,7 @@ defmodule Hotchpotch.BoardControllerTest do
     Repo.insert! User.changeset(%User{}, new_user_attrs)
     conn = post conn, session_path(conn, :create), session: new_user_attrs
     conn = get conn, board_path(conn, :show, board)
-    assert html_response(conn, 200) =~ "id=\"app\""
+    assert html_response(conn, 200) =~ "ohmytitle"
   end
 
   test "guest access user action redirected to login page", %{conn: conn} do

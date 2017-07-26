@@ -21,7 +21,7 @@
   export default {
     data() {
       return {
-        msgs: [{text: "欢迎", name: "system"}],
+        msgs: [{text: "欢迎 " + document.querySelector('#nickname').textContent, name: "system"}],
       }
     },
     mounted() {
