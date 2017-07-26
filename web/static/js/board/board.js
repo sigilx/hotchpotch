@@ -18,9 +18,10 @@ const store = new Vuex.Store({
         .receive("error", resp => { console.log("Unable to join", resp) })
         .receive('ok', resp => {
           console.log("Joined successfully", resp)
-          state.channel.push('new_msg', {
+          state.channel.push("new_msg", {
+            name: "system",
             body: 'joined #random',
-            isSystem: true
+            is_system: true
           })
         })
     },

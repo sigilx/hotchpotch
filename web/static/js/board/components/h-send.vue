@@ -18,8 +18,9 @@ export default {
   methods: {
     sendMsg() {
       let payload = {
+        name: "exe",
         body: this.text,
-        isSystem: false
+        is_system: false
       }
       this.$store.commit("new_msg", payload)
       this.text = ''

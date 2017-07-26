@@ -1,7 +1,7 @@
 <template>
   <div class="row">
-    <div class="col-sm-3">{{msg.name}} :</div>
-    <div class="col-sm-9">{{msg.text}}</div>
+    <div class="col-sm-3 px-0">{{msg.name}} :</div>
+    <div class="col-sm-9 px-0">{{msg.text}}</div>
   </div>
 </template>
 
