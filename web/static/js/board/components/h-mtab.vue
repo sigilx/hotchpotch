@@ -21,7 +21,7 @@
   export default {
     data() {
       return {
-        msgs: [{id:1, name:'bbb', text:'cgegeegeff'}],
+        msgs: [{name:'bbb', text:'cgegeegeff'}],
       }
     },
     mounted() {

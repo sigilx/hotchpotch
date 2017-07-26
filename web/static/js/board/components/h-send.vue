@@ -11,38 +11,20 @@
 </style>
 
 <script>
-import socket from '../../socket'
-const channel = socket.channel("board:lobby", {})
-
 export default {
   data() {
     return {msg: [], text: ''}
   },
-  mounted() {
-    socket.connect()
-    this.joinChannel()
-    console.log(this.$store.state.count)
-  },
   methods: {
     sendMsg() {
-      this.$store.commit('increment')
-      channel.push('new_msg', {
-        body: this.text,
-        isSystem: false
-      })
+      let payload = {
+        "msg_type": "new_msg",
+        "msg": {
+          body: this.text,
+          isSystem: false
+        }}
+      this.$store.commit('send', payload)
       this.text = ''
-    console.log(this.$store.state.count)
-    },
-    joinChannel() {
-      channel.join()
-        .receive("error", resp => { console.log("Unable to join", resp) })
-        .receive('ok', resp => {
-          console.log("Joined successfully", resp)
-          channel.push('new_msg', {
-            body: 'joined #random',
-            isSystem: true
-          })
-        })
     }
   },
 };
