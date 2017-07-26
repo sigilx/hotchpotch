@@ -77,7 +77,8 @@ exports.config = {
       "bootstrap-vue": ["dist/bootstrap-vue.css"]
     },
     globals: {
-      Vue: "vue/dist/vue.min.js"
+      Vue: "vue/dist/vue.min.js",
+      Vuex: "vuex/dist/vuex.min.js"
     }
   }
 };

@@ -21,14 +21,17 @@ export default {
   mounted() {
     socket.connect()
     this.joinChannel()
+    console.log(this.$store.state.count)
   },
   methods: {
     sendMsg() {
+      this.$store.commit('increment')
       channel.push('new_msg', {
         body: this.text,
         isSystem: false
       })
       this.text = ''
+    console.log(this.$store.state.count)
     },
     joinChannel() {
       channel.join()
