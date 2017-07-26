@@ -26,7 +26,7 @@
     },
     mounted() {
       this.$store.state.channel.on('new_msg', payload => {
-        this.msgs.unshift({
+        this.msgs.push({
           name: payload.name,
           text: payload.body,
           is_system: payload.is_system
