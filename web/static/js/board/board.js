@@ -6,7 +6,6 @@ import hMtab from './components/h-mtab.vue'
 import hSend from './components/h-send.vue'
 
 import socket from '../socket'
-const channel = socket.channel("board:lobby", {})
 
 const store = new Vuex.Store({
   state: {
@@ -25,8 +24,8 @@ const store = new Vuex.Store({
           })
         })
     },
-    send (state, payload) {
-      state.channel.push(payload.msg_type, payload.msg)
+    new_msg (state, payload) {
+      state.channel.push("new_msg", payload)
     }
   }
 })

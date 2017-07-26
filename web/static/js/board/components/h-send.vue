@@ -18,12 +18,10 @@ export default {
   methods: {
     sendMsg() {
       let payload = {
-        "msg_type": "new_msg",
-        "msg": {
-          body: this.text,
-          isSystem: false
-        }}
-      this.$store.commit('send', payload)
+        body: this.text,
+        isSystem: false
+      }
+      this.$store.commit("new_msg", payload)
       this.text = ''
     }
   },
