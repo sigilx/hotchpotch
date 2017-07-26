@@ -18,7 +18,7 @@ export default {
   methods: {
     sendMsg() {
       let payload = {
-        name: "exe",
+        name: document.querySelector('#nickname').textContent,
         body: this.text,
         is_system: false
       }
