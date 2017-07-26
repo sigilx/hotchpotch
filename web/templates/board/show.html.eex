@@ -1,18 +1,18 @@
-<h2>Show board</h2>
 
-<ul>
-
-  <li>
-    <strong>Title:</strong>
-    <%= @board.title %>
-  </li>
-
-  <li>
-    <strong>User:</strong>
-    <%= @board.user_id %>
-  </li>
-
-</ul>
-
-<%= link "Edit", to: board_path(@conn, :edit, @board) %>
-<%= link "Back", to: board_path(@conn, :index) %>
+<div id="app">
+  <div class="row content">
+    <div class="col-9">
+      <h-board></h-board>
+    </div>
+    <div class="col-3">
+      <h-mtab></h-mtab>
+    </div>
+  </div>
+  <div class="row py-2">
+    <div class="col-4">
+    </div>
+    <div class="col-8">
+      <h-send></h-send>
+    </div>
+  </div>
+</div>

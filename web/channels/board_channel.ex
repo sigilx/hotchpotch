@@ -11,9 +11,19 @@ defmodule Hotchpotch.BoardChannel do
     end
   end
 
-  def join("board:" <> board_id, payload, socket) do
+  def join("board:" <> board_id, _payload, _socket) do
     board = Repo.get!(Board, board_id)
   end
+
+  def handle_in("new_msg", %{"name" => name, "body" => body, "is_system" => is_system}, socket) do
+    broadcast! socket, "new_msg", %{name: name, body: body, is_system: is_system}
+    {:noreply, socket}
+  end
+
+  # def handle_out("new_msg", payload, socket) do
+  #   push socket, "new_msg", payload
+  #   {:noreply, socket}
+  # end
 
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client

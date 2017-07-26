@@ -2,7 +2,10 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js"
+      joinTo: {
+       "js/app.js": [/^(web\/static\/js)/, /^(node_modules)/],
+       "js/board.js": [/web\/static\/js\/board/]
+      }
 
       // To use a separate vendor.js bundle, specify two files path
       // http://brunch.io/docs/config#-files-
@@ -54,6 +57,10 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/web\/static\/vendor/]
+    },
+    vue: {
+      extractCSS: false,
+      out: 'priv/static/css/components.css'
     }
   },
 
@@ -64,6 +71,14 @@ exports.config = {
   },
 
   npm: {
-    enabled: true
+    enabled: true,
+    styles: {
+      "bootstrap": ["dist/css/bootstrap.min.css"],
+      "bootstrap-vue": ["dist/bootstrap-vue.css"]
+    },
+    globals: {
+      Vue: "vue/dist/vue.min.js",
+      Vuex: "vuex/dist/vuex.min.js"
+    }
   }
 };
