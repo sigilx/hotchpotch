@@ -86,15 +86,14 @@ defmodule Hotchpotch.BoardControllerTest do
   end
 
   @tag logged_in: true
-  test "user should not allowed to show board of other people", %{conn: conn, user: user} do
+  test "user should allowed to show board of other people", %{conn: conn, user: user} do
     conn = post conn, board_path(conn, :create), board: @valid_attrs
     board = Repo.get_by(Board, Map.put(@valid_attrs, :user_id, user.id))
     new_user_attrs = %{email: "fake+1@gmail.com", "nickname": "二傻", password: String.duplicate("1", 6)}
     Repo.insert! User.changeset(%User{}, new_user_attrs)
     conn = post conn, session_path(conn, :create), session: new_user_attrs
-    assert_error_sent 404, fn ->
-      get conn, board_path(conn, :show, board)
-    end
+    conn = get conn, board_path(conn, :show, board)
+    assert html_response(conn, 200) =~ "id=\"app\""
   end
 
   test "guest access user action redirected to login page", %{conn: conn} do

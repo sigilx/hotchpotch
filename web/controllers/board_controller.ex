@@ -34,7 +34,7 @@ defmodule Hotchpotch.BoardController do
   end
 
   def show(conn, %{"id" => id}) do
-    board = Repo.get!(assoc(conn.assigns.current_user, :board), id)
+    board = Repo.get!(Board, id)
     render(conn, "show.html", board: board)
   end
 
