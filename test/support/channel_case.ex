@@ -1,4 +1,4 @@
-defmodule Hotchpotch.ChannelCase do
+defmodule HotchpotchWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -27,7 +27,7 @@ defmodule Hotchpotch.ChannelCase do
 
 
       # The default endpoint for testing
-      @endpoint Hotchpotch.Endpoint
+      @endpoint HotchpotchWeb.Endpoint
     end
   end
 

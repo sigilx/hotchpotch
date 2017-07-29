@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <%= if @current_user do %>
+      <%= tag :meta, name: "channel_token", content: Phoenix.Token.sign(@conn, "user", @current_user.id) %>
+    <% end %>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hello Hotchpotch!</title>
+    <link rel="icon" href="<%= static_path(@conn, "/favicon.ico") %>" >
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <%= link "嘿嘿黑板", class: "navbar-brand", to: page_path(@conn, :index) %>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <%= link "黑板", class: "nav-link", to: board_path(@conn, :index) %>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <%= if @current_user do %>
+            <li id="nickname" class="nav-item"><%= link @current_user.nickname, class: "nav-link", to: user_path(@conn, :show, @current_user) %></li>
+            <li class="nav-item"><%= link "退出", class: "nav-link", to: session_path(@conn, :delete, @current_user), method: :delete %></li>
+          <% else %>
+            <li class="nav-item"><%= link "登录", class: "nav-link", to: session_path(@conn, :new) %></li>
+            <li class="nav-item"><%= link "注册", class: "nav-link", to: user_path(@conn, :new) %></li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+      <main id="main" class="py-4" role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </main>
+
+    </div> <!-- /container -->
+
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <%= render_existing @view_module, "scripts." <> @view_template, assigns %>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-37180058-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
