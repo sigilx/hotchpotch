@@ -1,4 +1,4 @@
-defmodule Hotchpotch.ModelCase do
+defmodule HotchpotchWeb.ModelCase do
   @moduledoc """
   This module defines the test case to be used by
   model tests.
@@ -21,7 +21,7 @@ defmodule Hotchpotch.ModelCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Hotchpotch.ModelCase
+      import HotchpotchWeb.ModelCase
     end
   end
 
@@ -59,13 +59,13 @@ defmodule Hotchpotch.ModelCase do
   """
   def errors_on(struct, data) do
     struct.__struct__.changeset(struct, data)
-    |> Ecto.Changeset.traverse_errors(&Hotchpotch.ErrorHelpers.translate_error/1)
+    |> Ecto.Changeset.traverse_errors(&HotchpotchWeb.ErrorHelpers.translate_error/1)
     |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
   end
 
   def errors_on(changeset) do
     changeset
-    |> Ecto.Changeset.traverse_errors(&Hotchpotch.ErrorHelpers.translate_error/1)
+    |> Ecto.Changeset.traverse_errors(&HotchpotchWeb.ErrorHelpers.translate_error/1)
     |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
   end
 end

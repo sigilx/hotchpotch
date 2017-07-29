@@ -10,10 +10,10 @@ config :hotchpotch,
   ecto_repos: [Hotchpotch.Repo]
 
 # Configures the endpoint
-config :hotchpotch, Hotchpotch.Endpoint,
+config :hotchpotch, HotchpotchWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "Z1CqciXbCgifIMBFLYQmH3il+IqJSTMq1dBpE2VFlzQ+HxR36Y6OP7I6ZOYl2Nyu",
-  render_errors: [view: Hotchpotch.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: HotchpotchWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Hotchpotch.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

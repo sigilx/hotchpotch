@@ -1,4 +1,4 @@
-defmodule Hotchpotch.ConnCase do
+defmodule HotchpotchWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -25,10 +25,10 @@ defmodule Hotchpotch.ConnCase do
       import Ecto.Changeset
       import Ecto.Query
 
-      import Hotchpotch.Router.Helpers
+      import HotchpotchWeb.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint Hotchpotch.Endpoint
+      @endpoint HotchpotchWeb.Endpoint
     end
   end
 
