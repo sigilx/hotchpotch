@@ -30,7 +30,7 @@
         <ul class="navbar-nav">
           <%= if @current_user do %>
             <li id="nickname" class="nav-item"><%= link @current_user.nickname, class: "nav-link", to: user_path(@conn, :show, @current_user) %></li>
-            <li class="nav-item"><%= link "退出", class: "nav-link", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>
+            <li class="nav-item"><%= link "退出", class: "nav-link", to: session_path(@conn, :delete, @current_user), method: :delete %></li>
           <% else %>
             <li class="nav-item"><%= link "登录", class: "nav-link", to: session_path(@conn, :new) %></li>
             <li class="nav-item"><%= link "注册", class: "nav-link", to: user_path(@conn, :new) %></li>

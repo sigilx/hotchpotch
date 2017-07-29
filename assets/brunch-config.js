@@ -3,8 +3,8 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-       "js/app.js": [/^js/, /^node_modules/],
-       "js/board.js": [/js\/board/]
+        "js/app.js": [/^js/, /^node_modules/],
+        "js/board.js": [/js\/board/]
       }
 
       // To use a separate vendor.js bundle, specify two files path
@@ -23,10 +23,7 @@ exports.config = {
       // }
     },
     stylesheets: {
-      joinTo: "css/app.css",
-      order: {
-        after: ["css/app.css"] // concat app.css last
-      }
+      joinTo: "css/app.css"
     },
     templates: {
       joinTo: "js/app.js"
@@ -44,7 +41,6 @@ exports.config = {
   paths: {
     // Dependencies and current project directories to watch
     watched: ["static", "css", "js", "vendor"],
-
     // Where to compile files to
     public: "../priv/static"
   },
