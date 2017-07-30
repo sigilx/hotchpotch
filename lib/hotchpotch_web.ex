@@ -1,7 +1,7 @@
 defmodule HotchpotchWeb do
   @moduledoc """
-  A module that keeps using definitions for controllers,
-  views and so on.
+  The entrypoint for defining your web interface, such
+  as controllers, views, channels and so on.
 
   This can be used in your application as:
 
@@ -13,7 +13,8 @@ defmodule HotchpotchWeb do
   on imports, uses and aliases.
 
   Do NOT define functions inside the quoted expressions
-  below.
+  below. Instead, define any helper function in modules
+  and import those modules here.
   """
 
   def model do
@@ -29,14 +30,14 @@ defmodule HotchpotchWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: HotchpotchWeb
+      import Plug.Conn
+      import HotchpotchWeb.Router.Helpers
+      import HotchpotchWeb.Gettext
+      import HotchpotchWeb.Auth, only: [login_require: 2, self_require: 2]
 
       alias Hotchpotch.Repo
       import Ecto
       import Ecto.Query
-
-      import HotchpotchWeb.Router.Helpers
-      import HotchpotchWeb.Gettext
-      import HotchpotchWeb.Auth, only: [login_require: 2, self_require: 2]
     end
   end
 
@@ -60,17 +61,19 @@ defmodule HotchpotchWeb do
   def router do
     quote do
       use Phoenix.Router
+      import Plug.Conn
+      import Phoenix.Controller
     end
   end
 
   def channel do
     quote do
       use Phoenix.Channel
+      import HotchpotchWeb.Gettext
 
       alias Hotchpotch.Repo
       import Ecto
       import Ecto.Query
-      import HotchpotchWeb.Gettext
     end
   end
 
