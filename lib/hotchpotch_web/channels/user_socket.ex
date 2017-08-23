@@ -2,7 +2,7 @@ defmodule HotchpotchWeb.UserSocket do
   use Phoenix.Socket
 
   alias Hotchpotch.Repo
-  alias HotchpotchWeb.User
+  alias Hotchpotch.Accounts.User
 
   ## Channels
   channel "board:*", HotchpotchWeb.BoardChannel

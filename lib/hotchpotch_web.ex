@@ -17,16 +17,6 @@ defmodule HotchpotchWeb do
   and import those modules here.
   """
 
-  def model do
-    quote do
-      use Ecto.Schema
-
-      import Ecto
-      import Ecto.Changeset
-      import Ecto.Query
-    end
-  end
-
   def controller do
     quote do
       use Phoenix.Controller, namespace: HotchpotchWeb
@@ -34,10 +24,6 @@ defmodule HotchpotchWeb do
       import HotchpotchWeb.Router.Helpers
       import HotchpotchWeb.Gettext
       import HotchpotchWeb.Auth, only: [login_require: 2, self_require: 2]
-
-      alias Hotchpotch.Repo
-      import Ecto
-      import Ecto.Query
     end
   end
 
@@ -70,10 +56,6 @@ defmodule HotchpotchWeb do
     quote do
       use Phoenix.Channel
       import HotchpotchWeb.Gettext
-
-      alias Hotchpotch.Repo
-      import Ecto
-      import Ecto.Query
     end
   end
 
