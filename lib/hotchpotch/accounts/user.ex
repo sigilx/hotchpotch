@@ -1,5 +1,8 @@
-defmodule HotchpotchWeb.User do
-  use HotchpotchWeb, :model
+defmodule Hotchpotch.Accounts.User do
+  use Ecto.Schema
+  import Ecto.Changeset
+  alias Hotchpotch.Accounts.User
+
 
   schema "users" do
     field :username, :string
@@ -15,12 +18,10 @@ defmodule HotchpotchWeb.User do
   @required_fields ~w(nickname email password)a
   @allowed_fields ~w(username nickname email password)a
 
-  @doc """
-  Builds a changeset based on the `struct` and `params`.
-  """
-  def changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, @allowed_fields)
+  @doc false
+  def changeset(%User{} = user, attrs) do
+    user
+    |> cast(attrs, @allowed_fields)
     |> validate_required(@required_fields, message: "请填写")
     |> validate_length(:nickname, min: 2, message: "昵称最短 2 位")
     |> validate_length(:nickname, max: 9, message: "昵称最长 9 位")
