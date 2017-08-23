@@ -10,7 +10,7 @@ defmodule Hotchpotch.Accounts.User do
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
-    has_one :board, HotchpotchWeb.Board
+    has_one :board, Hotchpotch.Boards.Board
 
     timestamps()
   end
