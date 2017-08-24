@@ -1,15 +1,15 @@
 defmodule HotchpotchWeb.SessionController do
   use HotchpotchWeb, :controller
 
-  alias Hotchpotch.Repo
-  alias HotchpotchWeb.{User, Auth}
+  alias Hotchpotch.Accounts
+  alias HotchpotchWeb.Auth
 
   def new(conn, _params) do
     render conn, "new.html"
   end
 
   def create(conn, %{"session" => %{"email" => email, "password" => password}}) do
-    user = Repo.get_by(User, email: email)
+    user = Accounts.get_user_by(email)
     cond do
       user && Comeonin.Bcrypt.checkpw(password, user.password_hash) ->
         conn
