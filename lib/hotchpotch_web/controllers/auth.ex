@@ -29,7 +29,7 @@ defmodule HotchpotchWeb.Auth do
 
   Returns `conn`
   """
-  def login_require(conn, _opts) do
+  def login_required(conn, _opts) do
     case get_session(conn, :user_id) do
       nil ->
         conn
@@ -46,7 +46,7 @@ defmodule HotchpotchWeb.Auth do
 
   Returns `conn`
   """
-  def self_require(conn, _opts) do
+  def self_required(conn, _opts) do
     %{"id" => id} = conn.params
     if String.to_integer(id) == conn.assigns.current_user.id do
       conn

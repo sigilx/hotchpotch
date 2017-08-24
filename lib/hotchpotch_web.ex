@@ -23,7 +23,7 @@ defmodule HotchpotchWeb do
       import Plug.Conn
       import HotchpotchWeb.Router.Helpers
       import HotchpotchWeb.Gettext
-      import HotchpotchWeb.Auth, only: [login_require: 2, self_require: 2]
+      import HotchpotchWeb.Auth, only: [login_required: 2, self_required: 2]
     end
   end
 

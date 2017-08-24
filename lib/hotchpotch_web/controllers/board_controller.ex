@@ -2,7 +2,7 @@ defmodule HotchpotchWeb.BoardController do
   use HotchpotchWeb, :controller
   use HotchpotchWeb.Controller
 
-  plug :login_require
+  plug :login_required
   alias Hotchpotch.Boards
   alias Hotchpotch.Boards.Board
 
