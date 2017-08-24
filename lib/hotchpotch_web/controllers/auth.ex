@@ -30,13 +30,14 @@ defmodule HotchpotchWeb.Auth do
   Returns `conn`
   """
   def login_require(conn, _opts) do
-    if conn.assigns.current_user do
-      conn
-    else
-      conn
-      |> put_flash(:info, "请先登录")
-      |> redirect(to: Helpers.session_path(conn, :new))
-      |> halt()
+    case get_session(conn, :user_id) do
+      nil ->
+        conn
+        |> put_flash(:error, "请先登录")
+        |> redirect(to: Helpers.session_path(conn, :new))
+        |> halt()
+      user_id ->
+        assign(conn, :current_user, Hotchpotch.Accounts.get_user!(user_id))
     end
   end
 
