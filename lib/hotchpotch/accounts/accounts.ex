@@ -103,7 +103,11 @@ defmodule Hotchpotch.Accounts do
   end
 
 
-  def get_user_by(email) do
-    Repo.get_by(User, email: email)
+  def authenticate_by_email_password(email, password) do
+    user = Repo.get_by(User, email: email)
+    case Comeonin.Bcrypt.checkpw(password, user.password_hash) do
+      true -> {:ok, user}
+      false -> {:error, :unauthorized}
+    end
   end
 end
