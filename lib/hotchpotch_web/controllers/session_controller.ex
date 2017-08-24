@@ -24,8 +24,8 @@ defmodule HotchpotchWeb.SessionController do
 
   def delete(conn, _params) do
     conn
-    |> delete_session(:user_id)
+    |> configure_session(drop: true)
     |> put_flash(:info, "退出成功")
-    |> redirect(to: page_path(conn, :index))
+    |> redirect(to: "/")
   end
 end
