@@ -5,6 +5,20 @@ defmodule HotchpotchWeb.BoardController do
   alias Hotchpotch.Boards.Board
 
   plug :login_required
+  plug :authorize_board when action in [:edit, :update, :delete]
+
+  defp authorize_board(conn, _) do
+    board = Boards.get_board!(conn.params["id"])
+
+    if conn.assigns.current_user.id == board.user_id do
+      assign(conn, :board, board)
+    else
+      conn
+      |> put_flash(:error, "You can't modify that board")
+      |> redirect(to: board_path(conn, :index))
+      |> halt()
+    end
+  end
 
   def index(conn, _params) do
     boards = Boards.list_boards()
