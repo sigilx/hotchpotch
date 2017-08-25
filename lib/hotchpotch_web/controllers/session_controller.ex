@@ -1,37 +1,31 @@
 defmodule HotchpotchWeb.SessionController do
   use HotchpotchWeb, :controller
 
-  alias Hotchpotch.Repo
-  alias HotchpotchWeb.{User, Auth}
+  alias Hotchpotch.Accounts
+  alias HotchpotchWeb.Auth
 
   def new(conn, _params) do
     render conn, "new.html"
   end
 
   def create(conn, %{"session" => %{"email" => email, "password" => password}}) do
-    user = Repo.get_by(User, email: email)
-    cond do
-      user && Comeonin.Bcrypt.checkpw(password, user.password_hash) ->
+    case Accounts.authenticate_by_email_password(email, password) do
+      {:ok, user} ->
         conn
-        |> put_flash(:info, "欢迎你")
+        |> put_flash(:info, "欢迎回来!")
         |> Auth.login(user)
-        |> redirect(to: page_path(conn, :index))
-      user ->
+        |> redirect(to: "/")
+      {:error, :unauthorized} ->
         conn
         |> put_flash(:error, "用户名或密码错误")
-        |> render("new.html")
-      true ->
-        Comeonin.Bcrypt.dummy_checkpw()
-        conn
-        |> put_flash(:error, "用户名或密码错误")
-        |> render("new.html")
+        |> redirect(to: session_path(conn, :new))
     end
   end
 
   def delete(conn, _params) do
     conn
-    |> delete_session(:user_id)
+    |> configure_session(drop: true)
     |> put_flash(:info, "退出成功")
-    |> redirect(to: page_path(conn, :index))
+    |> redirect(to: "/")
   end
 end

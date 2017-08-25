@@ -2,7 +2,7 @@ defmodule HotchpotchWeb.BoardChannel do
   use HotchpotchWeb, :channel
 
   alias Hotchpotch.Repo
-  alias HotchpotchWeb.Board
+  alias Hotchpotch.Boards.Board
 
   def join("board:lobby", payload, socket) do
     if authorized?(payload) do

@@ -14,7 +14,7 @@ defmodule HotchpotchWeb.Auth do
 
   def call(conn, repo) do
     user_id = get_session(conn, :user_id)
-    user = user_id && repo.get(HotchpotchWeb.User, user_id)
+    user = user_id && repo.get(Hotchpotch.Accounts.User, user_id)
     assign(conn, :current_user, user)
   end
 
@@ -29,14 +29,15 @@ defmodule HotchpotchWeb.Auth do
 
   Returns `conn`
   """
-  def login_require(conn, _opts) do
-    if conn.assigns.current_user do
-      conn
-    else
-      conn
-      |> put_flash(:info, "请先登录")
-      |> redirect(to: Helpers.session_path(conn, :new))
-      |> halt()
+  def login_required(conn, _opts) do
+    case get_session(conn, :user_id) do
+      nil ->
+        conn
+        |> put_flash(:error, "请先登录")
+        |> redirect(to: Helpers.session_path(conn, :new))
+        |> halt()
+      user_id ->
+        assign(conn, :current_user, Hotchpotch.Accounts.get_user!(user_id))
     end
   end
 
@@ -45,7 +46,7 @@ defmodule HotchpotchWeb.Auth do
 
   Returns `conn`
   """
-  def self_require(conn, _opts) do
+  def self_required(conn, _opts) do
     %{"id" => id} = conn.params
     if String.to_integer(id) == conn.assigns.current_user.id do
       conn

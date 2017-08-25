@@ -22,7 +22,7 @@ defmodule HotchpotchWeb.Router do
     resources "/users", UserController
     resources "/boards", BoardController
 
-    resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
   end
 
   # Other scopes may use custom stacks.

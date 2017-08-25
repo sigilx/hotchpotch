@@ -1,69 +1,73 @@
 defmodule HotchpotchWeb.BoardController do
   use HotchpotchWeb, :controller
 
-  plug :login_require
-  alias HotchpotchWeb.Board
+  alias Hotchpotch.Boards
+  alias Hotchpotch.Boards.Board
+
+  plug :login_required
+  plug :authorize_board when action in [:edit, :update, :delete]
+
+  defp authorize_board(conn, _) do
+    board = Boards.get_board!(conn.params["id"])
+
+    if conn.assigns.current_user.id == board.user_id do
+      assign(conn, :board, board)
+    else
+      conn
+      |> put_flash(:error, "You can't modify that board")
+      |> redirect(to: board_path(conn, :index))
+      |> halt()
+    end
+  end
 
   def index(conn, _params) do
-    boards = Repo.all(Board)
+    boards = Boards.list_boards()
     render(conn, "index.html", boards: boards)
   end
 
   def new(conn, _params) do
-    changeset =
-      conn.assigns.current_user
-      |> build_assoc(:board)
-      |> Board.changeset()
+    changeset = Boards.change_board(%Board{})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"board" => board_params}) do
-    changeset =
-      conn.assigns.current_user
-      |> build_assoc(:board)
-      |> Board.changeset(board_params)
-
-    case Repo.insert(changeset) do
+    case Boards.create_board(conn.assigns.current_user, board_params) do
       {:ok, _board} ->
         conn
         |> put_flash(:info, "Board created successfully.")
         |> redirect(to: board_path(conn, :index))
-      {:error, changeset} ->
+      {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
 
   def show(conn, %{"id" => id}) do
-    board = Repo.get!(Board, id)
+    board = Boards.get_board!(id)
     render(conn, "show.html", board: board)
   end
 
   def edit(conn, %{"id" => id}) do
-    board = Repo.get!(assoc(conn.assigns.current_user, :board), id)
-    changeset = Board.changeset(board)
+    board = Boards.get_board!(id)
+    changeset = Boards.change_board(board)
     render(conn, "edit.html", board: board, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "board" => board_params}) do
-    board = Repo.get!(assoc(conn.assigns.current_user, :board), id)
-    changeset = Board.changeset(board, board_params)
+    board = Boards.get_board!(id)
 
-    case Repo.update(changeset) do
+    case Boards.update_board(board, board_params) do
       {:ok, board} ->
         conn
         |> put_flash(:info, "Board updated successfully.")
         |> redirect(to: board_path(conn, :show, board))
-      {:error, changeset} ->
+      {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", board: board, changeset: changeset)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    board = Repo.get!(assoc(conn.assigns.current_user, :board), id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(board)
+    board = Boards.get_board!(id)
+    {:ok, _board} = Boards.delete_board(board)
 
     conn
     |> put_flash(:info, "Board deleted successfully.")
