@@ -7,6 +7,7 @@ defmodule Hotchpotch.Boards do
   alias Hotchpotch.Repo
 
   alias Hotchpotch.Boards.Board
+  alias Hotchpotch.Accounts.User
 
   @doc """
   Returns the list of boards.
@@ -53,9 +54,10 @@ defmodule Hotchpotch.Boards do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_board(attrs \\ %{}) do
+  def create_board(%User{} = user, attrs \\ %{}) do
     %Board{}
     |> Board.changeset(attrs)
+    |> Ecto.Changeset.put_change(:user_id, user.id)
     |> Repo.insert()
   end
 
@@ -104,13 +106,5 @@ defmodule Hotchpotch.Boards do
   """
   def change_board(%Board{} = board) do
     Board.changeset(board, %{})
-  end
-
-
-  def create_board_for_user(current_user, attrs \\ %{}) do
-    current_user
-    |> Ecto.build_assoc(:board)
-    |> Board.changeset(attrs)
-    |> Repo.insert()
   end
 end

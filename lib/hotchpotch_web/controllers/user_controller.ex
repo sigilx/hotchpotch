@@ -1,11 +1,12 @@
 defmodule HotchpotchWeb.UserController do
   use HotchpotchWeb, :controller
-  plug :login_required when action in [:show, :edit, :update]
-  plug :self_required when action in [:show, :edit, :update]
 
   alias Hotchpotch.Accounts
   alias Hotchpotch.Accounts.User
   alias HotchpotchWeb.Auth
+
+  plug :login_required when action in [:show, :edit, :update]
+  plug :self_required when action in [:show, :edit, :update]
 
   def new(conn, _params) do
     changeset = Accounts.change_user(%User{})
@@ -48,5 +49,4 @@ defmodule HotchpotchWeb.UserController do
         render(conn, "edit.html", user: user, changeset: changeset)
     end
   end
-
 end
