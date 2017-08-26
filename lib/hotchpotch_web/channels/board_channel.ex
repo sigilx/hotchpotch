@@ -11,8 +11,13 @@ defmodule HotchpotchWeb.BoardChannel do
     end
   end
 
-  def join("board:" <> board_id, _payload, _socket) do
+  def join("board:" <> board_id, payload, socket) do
     board = Boards.get_board!(board_id)
+    if authorized?(payload) do
+      {:ok, socket}
+    else
+      {:error, %{reason: "unauthorized"}}
+    end
   end
 
   def handle_in("new_msg", %{"name" => name, "body" => body, "is_system" => is_system}, socket) do

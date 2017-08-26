@@ -9,7 +9,7 @@ import socket from '../socket'
 
 const store = new Vuex.Store({
   state: {
-    channel: socket.channel("board:lobby", {})
+    channel: socket.channel("board:" + window.location.pathname.split('/').pop(), {})
   },
   mutations: {
     join (state) {
