@@ -1,8 +1,7 @@
 defmodule HotchpotchWeb.BoardChannel do
   use HotchpotchWeb, :channel
 
-  alias Hotchpotch.Repo
-  alias Hotchpotch.Boards.Board
+  alias Hotchpotch.Boards
 
   def join("board:lobby", payload, socket) do
     if authorized?(payload) do
@@ -13,7 +12,7 @@ defmodule HotchpotchWeb.BoardChannel do
   end
 
   def join("board:" <> board_id, _payload, _socket) do
-    board = Repo.get!(Board, board_id)
+    board = Boards.get_board!(board_id)
   end
 
   def handle_in("new_msg", %{"name" => name, "body" => body, "is_system" => is_system}, socket) do

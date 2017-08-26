@@ -1,4 +1,4 @@
 <div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}", name: "Phoenix!" %></h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
+  <h2><%= gettext "欢迎来到 %{name}！", name: "嘿嘿黑板" %></h2>
+  <p class="lead">实时文字、语音聊天<br />多人共享白板沟通系统</p>
 </div>
