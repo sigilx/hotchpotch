@@ -14,4 +14,4 @@ MIX_ENV=prod mix phoenix.digest
 MIX_ENV=prod mix ecto.migrate
 
 # Finally run the server
-MIX_ENV=prod PORT=4321 elixir --detached -S mix phx.server
+MIX_ENV=prod elixir --detached -S mix phx.server
