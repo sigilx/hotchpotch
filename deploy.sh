@@ -8,7 +8,7 @@ MIX_ENV=prod mix compile
 cd assets
 node node_modules/brunch/bin/brunch  build --production
 cd ..
-MIX_ENV=prod mix phoenix.digest
+MIX_ENV=prod mix phx.digest
 
 # Custom tasks (like DB migrations)ZZ
 MIX_ENV=prod mix ecto.migrate
