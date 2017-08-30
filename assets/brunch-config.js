@@ -52,8 +52,8 @@ exports.config = {
       ignore: [/vendor/]
     },
     vue: {
-      extractCSS: false,
-      out: '../priv/static/css/components.css'
+      extractCSS: true,
+      out: 'css/bundle.css'
     }
   },
 
