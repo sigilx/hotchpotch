@@ -3,8 +3,9 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-        "js/app.js": [/^js/, /^node_modules/],
-        "js/board.js": [/js\/board/]
+        "js/app.js": /^js/,
+        "js/vendor.js": /^node_modules/,
+        "js/board.js": /js\/board/
       }
 
       // To use a separate vendor.js bundle, specify two files path
@@ -23,7 +24,9 @@ exports.config = {
       // }
     },
     stylesheets: {
-      joinTo: "css/app.css"
+      joinTo: {
+        "css/app.css": [/^css/, /^node_modules/],
+      }
     },
     templates: {
       joinTo: "js/app.js"
@@ -53,7 +56,7 @@ exports.config = {
     },
     vue: {
       extractCSS: true,
-      out: 'css/bundle.css'
+      out: "css/bundle.css"
     }
   },
 
@@ -71,7 +74,9 @@ exports.config = {
     },
     globals: {
       Vue: "vue/dist/vue.min.js",
-      Vuex: "vuex/dist/vuex.min.js"
+      Vuex: "vuex/dist/vuex.min.js",
+      jQuery: "jquery/dist/jquery.slim.min.js",
+      Bootstrap: "bootstrap/dist/js/bootstrap.min.js"
     }
   }
 };
