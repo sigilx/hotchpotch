@@ -5,7 +5,7 @@ defmodule HotchpotchWeb.ConnCase do
 
   Such tests rely on `Phoenix.ConnTest` and also
   import other functionality to make it easier
-  to build and query models.
+  to build common datastructures and query the data layer.
 
   Finally, if the test case interacts with the database,
   it cannot be async. For this reason, every test runs
@@ -19,12 +19,6 @@ defmodule HotchpotchWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-
-      alias Hotchpotch.Repo
-      import Ecto
-      import Ecto.Changeset
-      import Ecto.Query
-
       import HotchpotchWeb.Router.Helpers
 
       # The default endpoint for testing
@@ -32,13 +26,13 @@ defmodule HotchpotchWeb.ConnCase do
     end
   end
 
+
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Hotchpotch.Repo)
-
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Hotchpotch.Repo, {:shared, self()})
     end
-
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
+
 end
