@@ -3,7 +3,7 @@ defmodule HotchpotchWeb.UserController do
 
   alias Hotchpotch.Accounts
   alias Hotchpotch.Accounts.User
-  alias HotchpotchWeb.Auth
+  alias HotchpotchWeb.Plugs.Auth
 
   plug :login_required when action in [:show, :edit, :update]
   plug :self_required when action in [:show, :edit, :update]

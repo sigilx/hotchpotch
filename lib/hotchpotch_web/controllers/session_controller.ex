@@ -2,7 +2,7 @@ defmodule HotchpotchWeb.SessionController do
   use HotchpotchWeb, :controller
 
   alias Hotchpotch.Accounts
-  alias HotchpotchWeb.Auth
+  alias HotchpotchWeb.Plugs.Auth
 
   def new(conn, _params) do
     render conn, "new.html"

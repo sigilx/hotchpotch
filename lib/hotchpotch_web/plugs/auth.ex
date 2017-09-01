@@ -1,4 +1,4 @@
-defmodule HotchpotchWeb.Auth do
+defmodule HotchpotchWeb.Plugs.Auth do
   import Plug.Conn
   import Phoenix.Controller
 
