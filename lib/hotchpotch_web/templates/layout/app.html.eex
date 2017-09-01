@@ -9,7 +9,7 @@
       <%= tag :meta, name: "channel_token", content: Phoenix.Token.sign(@conn, "user", @current_user.id) %>
     <% end %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Hello Hotchpotch!</title>
+    <title><%= page_title(assigns) %></title>
     <link rel="icon" href="<%= static_path(@conn, "/favicon.ico") %>" >
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
