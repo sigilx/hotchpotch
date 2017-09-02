@@ -3,8 +3,7 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-        "js/app.js": /^js/,
-        "js/vendor.js": /^node_modules/,
+        "js/app.js": [/^js/, /^node_modules/],
         "js/board.js": /js\/board/
       }
 
@@ -69,14 +68,14 @@ exports.config = {
   npm: {
     enabled: true,
     styles: {
-      "bootstrap": ["dist/css/bootstrap.min.css"],
+      "bootstrap": ["dist/css/bootstrap.css"],
       "bootstrap-vue": ["dist/bootstrap-vue.css"]
     },
     globals: {
-      Vue: "vue/dist/vue.min.js",
-      Vuex: "vuex/dist/vuex.min.js",
-      jQuery: "jquery/dist/jquery.slim.min.js",
-      Bootstrap: "bootstrap/dist/js/bootstrap.min.js"
+      Vue: "vue/dist/vue.common.js",
+      Vuex: "vuex/dist/vuex.common.js",
+      jQuery: "jquery/dist/jquery.slim.js",
+      Bootstrap: "bootstrap/dist/js/bootstrap.js"
     }
   }
 };
