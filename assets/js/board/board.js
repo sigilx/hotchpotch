@@ -9,13 +9,13 @@ import socket from '../socket'
 
 const store = new Vuex.Store({
   state: {
-    channel: socket.channel("board:" + window.location.pathname.split('/').pop(), {})
+    channel: socket.channel("board:chat:" + window.location.pathname.split('/').pop(), {})
   },
   mutations: {
     join (state) {
       socket.connect()
       state.channel.join()
-        .receive("error", resp => { console.log("Unable to join", resp) })
+        .receive("error", resp => { console.log("Unable to join: ", resp.reason) })
         .receive('ok', resp => {
           console.log("Joined successfully", resp)
           state.channel.push("new_msg", {
