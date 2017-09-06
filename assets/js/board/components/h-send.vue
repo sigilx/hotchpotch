@@ -1,6 +1,6 @@
 <template>
   <b-input-group left="聊天">
-    <b-form-input v-model="text" type="text" @keyup.enter="sendMsg"></b-form-input>
+    <b-form-input v-model="text" type="text" @keyup.enter.native="sendMsg"></b-form-input>
     <b-input-group-button slot="right">
       <b-button variant="success" @click="sendMsg"> 发送 </b-button>
     </b-input-group-button>
