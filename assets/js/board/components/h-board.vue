@@ -1,13 +1,10 @@
 <template>
   <div class="d-flex justify-content-center">
-    <canvas class="whiteboard"></canvas>
-    <div class="colors">
-      <div class="color black"></div>
-      <div class="color red"></div>
-      <div class="color green"></div>
-      <div class="color blue"></div>
-      <div class="color yellow"></div>
-    </div>
+    <canvas id="canvas" class="whiteboard" width="800" height="500"
+      @mousedown="start"
+      @mousemove="move"
+      @mouseup="drawing = false">
+    </canvas>
   </div>
 </template>
 
@@ -15,24 +12,47 @@
 .whiteboard {
   border: 1px solid #ddd;
   width: 100%;
-  height: 100%;
+  height: auto;
   background-color:whitesmoke;
 }
-.colors {
-  position: absolute;
-}
-.color {
-  display: inline-block;
-  height: 42px;
-  width: 42px;
-}
-.color.black { background-color: black; }
-.color.red { background-color: red; }
-.color.green { background-color: green; }
-.color.blue { background-color: blue; }
-.color.yellow { background-color: yellow; }
 </style>
 
 <script>
-  export default {};
+  export default {
+    data() {
+      return {
+        currX: null,
+        currY: null,
+        prevX: null,
+        prevY: null,
+        drawing: false,
+        canvas: null,
+        ctx: null,
+        color: "#F63E02"
+      }
+    },
+    mounted: function() {
+      this.canvas = document.getElementById('canvas');
+      this.ctx = canvas.getContext('2d');
+      this.ctx.strokeStyle = this.color;
+    },
+    methods: {
+      start: function() {
+        this.drawing = true;
+        this.ctx.moveTo(this.currX, this.currY);
+      },
+      move: function(event) {
+        this.prevX = this.currX;
+        this.prevY = this.currY;
+
+        this.currX = event.clientX;
+        this.currY = event.clientY;
+
+        if (this.drawing) {
+          this.ctx.lineTo(this.currX, this.currY);
+          this.ctx.stroke();
+        }
+      }
+    }
+  };
 </script>
