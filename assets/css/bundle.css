@@ -1,6 +1,6 @@
-canvas[data-v-218c6b79] {
+.whiteboard[data-v-218c6b79] {
   border: 1px solid #ddd;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
   background-color:whitesmoke;
 }

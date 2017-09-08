@@ -9,24 +9,33 @@ import socket from '../socket'
 
 const store = new Vuex.Store({
   state: {
-    channel: socket.channel("board:" + window.location.pathname.split('/').pop(), {})
+    chatChan: socket.channel("board:chat:" + window.location.pathname.split('/').pop(), {}),
+    drawChan: socket.channel("board:draw:" + window.location.pathname.split('/').pop(), {})
   },
   mutations: {
     join (state) {
-      socket.connect()
-      state.channel.join()
-        .receive("error", resp => { console.log("Unable to join", resp) })
+      socket.connect();
+      state.chatChan.join()
+        .receive("error", resp => { console.log("Unable to join: ", resp.reason) })
         .receive('ok', resp => {
-          console.log("Joined successfully", resp)
-          state.channel.push("new_msg", {
+          console.log("Joined chat channel successfully", resp);
+          state.chatChan.push("new_msg", {
             name: document.querySelector('#nickname').textContent,
             body: '加入频道 ' + document.querySelector('#app .title').textContent,
             is_system: true
           })
-        })
+        });
+      state.drawChan.join()
+        .receive("error", resp => { console.log("Unable to join: ", resp.reason) })
+        .receive('ok', resp => {
+          console.log("Joined draw channel successfully", resp);
+        });
     },
     new_msg (state, payload) {
-      state.channel.push("new_msg", payload)
+      state.chatChan.push("new_msg", payload)
+    },
+    drawing (state, payload) {
+      state.drawChan.push("drawing", payload)
     }
   }
 })

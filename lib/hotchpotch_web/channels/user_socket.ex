@@ -4,7 +4,8 @@ defmodule HotchpotchWeb.UserSocket do
   alias Hotchpotch.Accounts
 
   ## Channels
-  channel "board:*", HotchpotchWeb.BoardChannel
+  channel "board:chat:*", HotchpotchWeb.BoardchatChannel
+  channel "board:draw:*", HotchpotchWeb.BoarddrawChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
@@ -25,8 +26,8 @@ defmodule HotchpotchWeb.UserSocket do
     case Phoenix.Token.verify(socket, "user", token, max_age: 3600*24) do
       {:ok, user_id} ->
         {:ok, assign(socket, :current_user, Accounts.get_user!(user_id))}
-      {:error, _reason} ->
-        :error
+      {:error, reason} ->
+        {:error, reason}
     end
   end
 
