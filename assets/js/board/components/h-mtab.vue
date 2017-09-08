@@ -25,7 +25,7 @@
       }
     },
     mounted() {
-      this.$store.state.channel.on('new_msg', payload => {
+      this.$store.state.chatChan.on('new_msg', payload => {
         this.msgs.push({
           name: payload.name,
           text: payload.body,
