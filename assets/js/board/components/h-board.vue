@@ -26,48 +26,40 @@ export default {
       currX: null,
       currY: null,
       color: '#F63E02',
-      down: false
-    }
-  },
-  computed: {
-    currentMouse: function () {
-      var rect = this.canvas.getBoundingClientRect();
-      return {
-        x: this.currX - rect.left,
-        y: this.currY - rect.top
-      }
+      drawing: false
     }
   },
   methods: {
-    draw: function (event) {
-      // requestAnimationFrame(this.draw);
-      if (this.down ) {
-        this.ctx.clearRect(0,0,800,500);
-        this.ctx.lineTo(this.currentMouse.x, this.currentMouse.y);
+    drawLine: function (x0, y0, x1, y1) {
+      if (this.drawing ) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(x0, y0);
+        this.ctx.lineTo(x1, y1);
+        this.ctx.strokeStyle = this.color;
         this.ctx.lineWidth = 2;
-        this.ctx.stroke()
+        this.ctx.stroke();
+        this.ctx.closePath();
       }
     },
-    onMouseDown: function (event) {
-      this.down = true;
-      this.currX = event.clientX
-      this.currY = event.clientY
-      this.ctx.moveTo(this.currentMouse.x, this.currentMouse.y)
+    onMouseDown: function (e) {
+      this.drawing = true;
+      this.currX = e.offsetX
+      this.currY = e.offsetY
     },
-    onMouseUp: function () {
-      this.down = false;
+    onMouseUp: function (e) {
+      if (!this.drawing) { return; }
+      this.drawing = false;
+      this.drawLine(this.currX, this.currY, e.offsetX, e.offsetY)
     },
-    onMouseMove: function (event) {
-      this.currX = event.clientX
-      this.currY = event.clientY
-      this.draw(event)
+    onMouseMove: function (e) {
+      this.drawLine(this.currX, this.currY, e.offsetX, e.offsetY)
+      this.currX = e.offsetX
+      this.currY = e.offsetY
     }
   },
   mounted: function () {
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
-    this.ctx.strokeStyle = this.color;
-    this.ctx.translate(0.5, 0.5);
   }
 };
 </script>
