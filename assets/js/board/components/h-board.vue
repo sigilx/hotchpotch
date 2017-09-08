@@ -28,16 +28,26 @@ export default {
     }
   },
   methods: {
-    drawLine: function (x0, y0, x1, y1) {
-      if (this.drawing) {
-        this.ctx.beginPath();
-        this.ctx.moveTo(x0, y0);
-        this.ctx.lineTo(x1, y1);
-        this.ctx.strokeStyle = this.color;
-        this.ctx.lineWidth = 2;
-        this.ctx.stroke();
-        this.ctx.closePath();
+    drawLine: function (x0, y0, x1, y1, color, emit) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(x0, y0);
+      this.ctx.lineTo(x1, y1);
+      this.ctx.strokeStyle = color;
+      this.ctx.lineWidth = 2;
+      this.ctx.stroke();
+      this.ctx.closePath();
+
+      if (!emit) { return; }
+      let w = this.canvas.width;
+      let h = this.canvas.height;
+      let payload = {
+        x0: x0 / w,
+        y0: y0 / h,
+        x1: x1 / w,
+        y1: y1 / h,
+        color: this.color
       }
+      this.$store.commit("drawing", payload)
     },
     onMouseDown: function (e) {
       this.drawing = true;
@@ -45,11 +55,13 @@ export default {
       this.currY = e.offsetY
     },
     onMouseUp: function (e) {
+      if (!this.drawing) { return; }
       this.drawing = false;
-      this.drawLine(this.currX, this.currY, e.offsetX, e.offsetY)
+      this.drawLine(this.currX, this.currY, e.offsetX, e.offsetY, this.color, true)
     },
     onMouseMove: function (e) {
-      this.drawLine(this.currX, this.currY, e.offsetX, e.offsetY)
+      if (!this.drawing) { return; }
+      this.drawLine(this.currX, this.currY, e.offsetX, e.offsetY, this.color, true)
       this.currX = e.offsetX
       this.currY = e.offsetY
     }
@@ -57,6 +69,11 @@ export default {
   mounted: function () {
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
+    this.$store.state.drawChan.on("drawing", payload => {
+      let w = canvas.width;
+      let h = canvas.height;
+      this.drawLine(payload.x0 * w, payload.y0 * h, payload.x1 * w, payload.y1 * h, payload.color)
+    })
   }
 };
 </script>

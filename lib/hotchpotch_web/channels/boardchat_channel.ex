@@ -20,8 +20,8 @@ defmodule HotchpotchWeb.BoardchatChannel do
     end
   end
 
-  def handle_in("new_msg", %{"name" => name, "body" => body, "is_system" => is_system}, socket) do
-    broadcast! socket, "new_msg", %{name: name, body: body, is_system: is_system}
+  def handle_in("new_msg", %{"name" => name, "body" => body, "is_system" => is_system} = payload, socket) do
+    broadcast! socket, "new_msg", payload
     {:noreply, socket}
   end
 

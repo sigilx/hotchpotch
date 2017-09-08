@@ -14,22 +14,22 @@ const store = new Vuex.Store({
   },
   mutations: {
     join (state) {
-      socket.connect()
+      socket.connect();
       state.chatChan.join()
         .receive("error", resp => { console.log("Unable to join: ", resp.reason) })
         .receive('ok', resp => {
-          console.log("Joined chat channel successfully", resp)
+          console.log("Joined chat channel successfully", resp);
           state.chatChan.push("new_msg", {
             name: document.querySelector('#nickname').textContent,
             body: '加入频道 ' + document.querySelector('#app .title').textContent,
             is_system: true
           })
-        })
+        });
       state.drawChan.join()
         .receive("error", resp => { console.log("Unable to join: ", resp.reason) })
         .receive('ok', resp => {
-          console.log("Joined draw channel successfully", resp)
-        })
+          console.log("Joined draw channel successfully", resp);
+        });
     },
     new_msg (state, payload) {
       state.chatChan.push("new_msg", payload)
