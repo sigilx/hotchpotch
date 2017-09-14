@@ -1,5 +1,6 @@
-const path = require("path");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 // const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
@@ -10,14 +11,16 @@ module.exports = {
     board: 'js/board/board.js',
   },
   output: {
-    path: path.resolve(__dirname, "../priv/static"),
+    path: path.resolve(__dirname, '../priv/static'),
     filename: 'js/[name].js'
   },
   resolve: {
-    modules: ["node_modules", __dirname,
-      path.resolve(__dirname, "../deps/phoenix"),
-      path.resolve(__dirname, "../deps/phoenix_html")
-    ],
+    modules: ['node_modules', __dirname],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      'phoenix': path.resolve(__dirname, '../deps/phoenix/priv/static/phoenix.js'),
+      'phoenix_html': path.resolve(__dirname, '../deps/phoenix_html/priv/static/phoenix_html.js')
+    },
     extensions: ['.js', '.vue']
   },
   module: {
@@ -29,7 +32,8 @@ module.exports = {
         })
       }, {
         test: /\.js$/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        exclude: /node_modules/,
       }, {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -38,6 +42,7 @@ module.exports = {
         }
       }, {
         test: /\.(png|jpg|gif)$/,
+        exclude: /node_modules/,
         use: [{
           loader: 'url-loader',
           options: {
@@ -48,12 +53,27 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin("css/[name].css"),
+    new ExtractTextPlugin('css/[name].css'),
     new CopyWebpackPlugin([{
-      from: "static"
-    }]),
-    // new UglifyJSPlugin({
-    //   parallel: true
-    // })
+      from: 'static'
+    }])
   ]
+}
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports.devtool = '#source-map'
+  // http://vue-loader.vuejs.org/en/workflow/production.html
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"'
+      }
+    }),
+    new UglifyJSPlugin({
+      sourceMap: true,
+      compress: {
+        warnings: false
+      }
+    })
+  ])
 }

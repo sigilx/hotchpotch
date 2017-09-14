@@ -3,6 +3,7 @@
   "license": "MIT",
   "scripts": {
     "deploy": "webpack -p",
+    "build": "webpack",
     "watch": "webpack --stdin --progress --color"
   },
   "dependencies": {
