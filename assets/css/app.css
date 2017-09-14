@@ -1,1 +1,5 @@
 /* This file is for your main application css. */
+
+@import '~bootstrap/dist/css/bootstrap.css';
+@import '~bootstrap-vue/dist/bootstrap-vue.css';
+@import './phoenix.css';
