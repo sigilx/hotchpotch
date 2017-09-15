@@ -1,4 +1,7 @@
 import BootstrapVue from 'bootstrap-vue'
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
 Vue.use(BootstrapVue);
 
 import hBoard from './components/h-board.vue'
@@ -40,13 +43,11 @@ const store = new Vuex.Store({
   }
 })
 
-export var Board = {run: function() {
-  new Vue({
-    el: '#app',
-    store,
-    components: { hBoard, hMtab, hSend },
-    beforeCreate() {
-      this.$store.commit('join')
-    }
-  });
-}}
+new Vue({
+  el: '#app',
+  store,
+  components: { hBoard, hMtab, hSend },
+  beforeCreate() {
+    this.$store.commit('join')
+  }
+});

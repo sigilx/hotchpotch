@@ -6,7 +6,7 @@ MIX_ENV=prod mix compile
 
 # Compile assets
 cd assets
-node node_modules/brunch/bin/brunch  build --production
+MIX_ENV=dev node node_modules/webpack/bin/webpack
 cd ..
 MIX_ENV=prod mix phx.digest
 

@@ -2,13 +2,14 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
+  stats: { children: false },
   entry: {
     app: ['css/app.css', 'js/app.js'],
-    board: 'js/board/board.js',
+    board: ['js/board/board.js']
   },
   output: {
     path: path.resolve(__dirname, '../priv/static'),
@@ -32,13 +33,23 @@ module.exports = {
         })
       }, {
         test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
+        exclude: [/node_modules/, path.resolve(__dirname, '../deps/')],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015']
+          }
+        }
       }, {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
           extractCSS: true,
+          loaders: {
+          },
+          include: [
+            path.resolve(__dirname, './node_modules/vuetify')
+          ]
         }
       }, {
         test: /\.(png|jpg|gif)$/,
@@ -56,19 +67,14 @@ module.exports = {
     new ExtractTextPlugin('css/[name].css'),
     new CopyWebpackPlugin([{
       from: 'static'
-    }])
+    }]),
+    new webpack.optimize.ModuleConcatenationPlugin()
   ]
 }
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.MIX_ENV === 'prod') {
   module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
     new UglifyJSPlugin({
       sourceMap: true,
       compress: {
